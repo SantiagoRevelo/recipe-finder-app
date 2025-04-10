@@ -4,7 +4,7 @@ import type {
   RecipeSummary,
   RecipeDetail,
   Meal,
-} from '../model/recipe'
+} from '../models/recipe'
 
 const THE_MEAL_DB = 'TheMealDB'
 const RECIPES_PROVIDER = {

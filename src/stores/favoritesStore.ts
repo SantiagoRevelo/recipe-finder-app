@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
-import type { RecipeSummary } from '../model/recipe'
+import type { RecipeSummary } from '@/models/recipe'
 
 const FAVORITES_STORAGE_KEY = 'recipeFinderApp.Favorites'
 
@@ -9,7 +9,7 @@ export const useFavoritesStore = defineStore('favorites', () => {
 
   const isFavorite = computed(() => {
     return (recipeId: string): boolean =>
-      favoriteRecipes.value.some((recipe: RecipeSummary) => recipe.id === recipeId)
+      favoriteRecipes.value.some((recipe) => recipe.id === recipeId)
   })
 
   const favoritesCount = computed(() => favoriteRecipes.value.length)
@@ -39,6 +39,7 @@ export const useFavoritesStore = defineStore('favorites', () => {
         return []
       }
     }
+    return []
   }
 
   watch(favoriteRecipes, (newFavorites) => {
