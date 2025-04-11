@@ -24,10 +24,6 @@ import AppLogo from '@/assets/images/recipe.svg'
 </script>
 
 <style scoped lang="scss">
-a {
-  text-decoration: none;
-  transition: 0.4s;
-}
 .logo {
   color: hsla(160, 100%, 35%, 1);
 }

@@ -49,7 +49,7 @@ function mapMealToRecipeDetail(mealData: Meal): RecipeDetail {
     thumbnail: mealData.strMealThumb,
     category: mealData.strCategory || '',
     origin: mealData.strArea || '',
-    instructions: mealData.strInstructions || '',
+    instructions: parseStepsFromText(mealData.strInstructions) || '',
     tags: mealData.strTags?.split(',').map((tag: string) => tag.trim()) || [],
     ytUrl: mealData.strYoutube || '',
     ingredients: mapMealDBResponseToIngredients(mealData),
@@ -82,7 +82,9 @@ export async function searchRecipesByName(query: string): Promise<RecipeSummary[
 export async function getRecipeDetailsById(id: string): Promise<RecipeDetail | null> {
   console.log(`[RecipeService] Obteniendo detalles para receta ID: ${id}`)
   try {
-    const response = await fetch(`${currentProvider.url}lookup.php?i=${id}`)
+    const query = `${currentProvider.url}lookup.php?i=${id}`
+    console.debug(`[RecipeService] Query: ${query}`)
+    const response = await fetch(query)
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`)
     }
@@ -99,4 +101,35 @@ export async function getRecipeDetailsById(id: string): Promise<RecipeDetail | n
     console.error(`[RecipeService] Error obteniendo detalles para ID ${id}:`, error)
     return null // Retornar null en caso de error
   }
+}
+
+function parseStepsFromText(text: string | undefined): { step: string; content: string }[] {
+  if (!text) {
+    return []
+  }
+  const lines = text.split('\r\n').filter((l) => l.trim() != '')
+  const steps: { step: string; content: string }[] = []
+  let currentStep: string | null = null
+  let currentContent: string[] = []
+
+  for (const line of lines) {
+    const stepMatch = line.match(/^STEP (\d+)/)
+    if (stepMatch) {
+      // Add previous step,content if a new step is found
+      if (currentStep && currentStep !== stepMatch[0]) {
+        steps.push({ step: currentStep, content: currentContent.join('\r\n').trim() })
+      }
+      currentStep = stepMatch[0] // "STEP N"
+      currentContent = []
+    } else if (line.trim() !== '') {
+      currentContent.push(line.trim())
+    }
+  }
+
+  // Add the last step if exists
+  if (currentStep) {
+    steps.push({ step: currentStep, content: currentContent.join(' ').trim() })
+  }
+
+  return steps
 }

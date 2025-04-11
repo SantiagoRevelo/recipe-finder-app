@@ -4,7 +4,7 @@
     <div class="water-mark-wrapper">
       <RecipeLogo class="water-mark text-gray-100" />
     </div>
-    <main class="flex-grow v mx-auto p-4">
+    <main class="flex-grow container mx-auto p-4">
       <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
           <component :is="Component" />
@@ -40,8 +40,8 @@ header {
 }
 .water-mark-wrapper {
   position: absolute;
-  inset: 30%;
-  top: 45%;
+
+  top: 30%;
   bottom: 20%;
   left: 50%;
   transform: translateX(-50%);

@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-semibold mb-4">Recipe Search</h1>
 
     <RecipeSearchForm @search="onSearch" />
-
+    <hr class="text-gray-200 mb-4" />
     <div v-if="error" class="mb-4 p-4 bg-red-100 text-red-700 border border-red-200 rouded-md">
       <p><strong>Error: </strong> {{ error }}</p>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submitSearch" class="mb-6">
-    <div class="flex flex-col sm:flex-grow gap-2">
+    <div class="flex flex-row sm:flex-grow gap-2">
       <input
         type="text"
         v-model.trim="searchQuery"

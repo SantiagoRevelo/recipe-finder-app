@@ -1,11 +1,14 @@
 {
+  "compilerOptions": {
+    "baseUrl": "./"
+  },
   "files": [],
   "references": [
     {
-      "path": "./tsconfig.node.json"
+      "path": "tsconfig.node.json" // Non-relative paths are now allowed
     },
     {
-      "path": "./tsconfig.app.json"
+      "path": "tsconfig.app.json"
     }
   ]
 }
