@@ -57,7 +57,7 @@ function mapMealToRecipeDetail(mealData: Meal): RecipeDetail {
 }
 
 export async function searchRecipesByName(query: string): Promise<RecipeSummary[]> {
-  console.log(`[RecipeService] Buscando recetas por nombre: ${query}`)
+  //console.log(`[RecipeService] Buscando recetas por nombre: ${query}`)
   try {
     const response = await fetch(`${currentProvider.url}search.php?s=${encodeURIComponent(query)}`)
     if (!response.ok) {
@@ -73,14 +73,14 @@ export async function searchRecipesByName(query: string): Promise<RecipeSummary[
     return data.meals.map(mapMealToRecipeSummary)
   } catch (error) {
     console.error('[RecipeService] Error buscando recetas:', error)
-    // En un caso real, podríamos querer manejar el error de forma más específica
-    // o lanzar un error personalizado para que la UI lo capture.
-    return [] // Retornar vacío en caso de error por ahora
+    throw new Error(
+      `Recipe server is not responding. Either it's down or your internet connection isn't working. Try again later.`,
+    )
   }
 }
 
 export async function getRecipeDetailsById(id: string): Promise<RecipeDetail | null> {
-  console.log(`[RecipeService] Obteniendo detalles para receta ID: ${id}`)
+  // console.log(`[RecipeService] Obteniendo detalles para receta ID: ${id}`)
   try {
     const query = `${currentProvider.url}lookup.php?i=${id}`
     console.debug(`[RecipeService] Query: ${query}`)
@@ -99,38 +99,8 @@ export async function getRecipeDetailsById(id: string): Promise<RecipeDetail | n
     }
   } catch (error) {
     console.error(`[RecipeService] Error obteniendo detalles para ID ${id}:`, error)
-    return null // Retornar null en caso de error
+    throw new Error(
+      `Can't get recipe details. Either recipe server it's down or your internet connection isn't working. Try again later.`,
+    )
   }
-}
-
-function parseStepsFromText(text: string | undefined): { step: string; content: string }[] {
-  console.debug(text)
-  if (!text) {
-    return []
-  }
-  const lines = text.split('\r\n').filter((l) => l.trim() != '')
-  const steps: { step: string; content: string }[] = []
-  let currentStep: string | null = null
-  let currentContent: string[] = []
-
-  for (const line of lines) {
-    const stepMatch = line.match(/^STEP (\d+)/) || line.match(/^(\d+)./)
-    if (stepMatch) {
-      // Add previous step,content if a new step is found
-      if (currentStep && currentStep !== stepMatch[0]) {
-        steps.push({ step: currentStep, content: currentContent.join('\r\n').trim() })
-      }
-      currentStep = stepMatch[0] // "STEP N"
-      currentContent = []
-    } else if (line.trim() !== '') {
-      currentContent.push(line.trim())
-    }
-  }
-
-  // Add the last step if exists
-  if (currentStep) {
-    steps.push({ step: currentStep, content: currentContent.join(' ').trim() })
-  }
-
-  return steps
 }

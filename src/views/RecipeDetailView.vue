@@ -6,13 +6,13 @@
 
     <div
       v-if="error"
-      class="py-10 px-4 text-center bg-red-100 text-red-700 border border-red-200 rounded-md"
+      class="py-10 p-4 text-center bg-red-100 text-red-700 border border-red-200 rounded-md"
     >
       <h2 class="text-xl font-semibold mb-2">Error</h2>
-      <p>{{ error }}</p>
+      <p class="mb-4">{{ error }}</p>
       <router-link
         to="/"
-        class="mt4 inline-block px-4 py-2 bg-red600 text-white rounded hover:bg-red-700"
+        class="mt4 inline-block px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 hover:text-white"
       >
         Back to Home
       </router-link>
@@ -167,7 +167,11 @@ const fetchRecipeDetails = async () => {
     }
   } catch (err) {
     console.error('[RecipeDetauilView] Error fetching recipe details:', err)
-    error.value = ' Unexpected error occurred while fetching recipe details.'
+    if (err instanceof Error) {
+      error.value = err.message
+    } else {
+      error.value = ' Unexpected error occurred while fetching recipe details.'
+    }
   } finally {
     isLoading.value = false
   }

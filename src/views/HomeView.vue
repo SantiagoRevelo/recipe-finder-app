@@ -8,7 +8,7 @@
       <p><strong>Error: </strong> {{ error }}</p>
     </div>
 
-    <h2 v-if="searchTerm" class="text-xl font-medium mb-4">
+    <h2 v-if="searchTerm && !error" class="text-xl font-medium mb-4">
       Search results for "{{ searchTerm }}"
     </h2>
 
@@ -87,7 +87,11 @@ const onSearch = async (query: string) => {
     }
   } catch (err) {
     console.error('Error searching recipes:', err)
-    error.value = 'An error occurred while searching for recipes'
+    if (err instanceof Error) {
+      error.value = err.message
+    } else {
+      error.value = 'An error occurred while searching for recipes'
+    }
   } finally {
     isLoading.value = false
   }

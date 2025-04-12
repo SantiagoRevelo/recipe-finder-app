@@ -16,7 +16,7 @@ export const useFavoritesStore = defineStore('favorites', () => {
 
   function addFavorite(recipe: RecipeSummary) {
     if (!isFavorite.value(recipe.id)) {
-      favoriteRecipes.value.push(recipe)
+      favoriteRecipes.value = [...favoriteRecipes.value, recipe]
     } else {
       console.warn(`[FavoritesStore] The recipe ${recipe.id} is already faved`)
     }
