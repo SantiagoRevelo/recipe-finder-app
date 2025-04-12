@@ -2,8 +2,13 @@
   <div>
     <div v-if="isLoading" class="text-center py-10">
       <p class="text-gray-500">Searching for recipes...</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <RecipeCardSkeleton />
+        <RecipeCardSkeleton />
+        <RecipeCardSkeleton />
+      </div>
     </div>
-    <div v-else-if="!recipes" class="text-center py-10">
+    <div v-else-if="!recipes.length" class="text-center py-10">
       <p class="text-gray-500">No recipes found. Try with another term</p>
     </div>
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -20,7 +25,7 @@
 <script setup lang="ts">
 import type { RecipeSummary } from '@/models/recipe'
 import RecipeCard from './RecipeCard.vue'
-
+import RecipeCardSkeleton from './skeletons/RecipeCardSkeleton.vue'
 // Props que espera este componente
 defineProps<{
   recipes: RecipeSummary[]

@@ -7,6 +7,7 @@
         placeholder="Search for recipes..."
         class="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
         aria-label="Search for recipes"
+        @input="updateSearchQuery"
       />
       <button
         type="submit"
@@ -23,8 +24,10 @@
 import { ref } from 'vue'
 
 const searchQuery = ref('')
+
 const emit = defineEmits<{
   (e: 'search', query: string): void
+  (e: 'update-search-query', query: string): void
 }>()
 
 const submitSearch = () => {
@@ -32,6 +35,10 @@ const submitSearch = () => {
     emit('search', searchQuery.value.trim())
   }
   searchQuery.value = ''
+}
+
+const updateSearchQuery = () => {
+  emit('update-search-query', searchQuery.value.trim())
 }
 </script>
 <style lang="scss"></style>
