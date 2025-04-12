@@ -1,45 +1,84 @@
-# Recipe Finder
+# Recipe Finder App
 
-A frontend application built with **Vue 3 + Vite**, following **SOLID** principles and clean architecture best practices. Users can search recipes by ingredients or keywords, view details, and save favorites locally.
+This is a simple web application to search for recipes by name, view their details, and save your favorites locally.
+
+Built with Vite, Vue.js 3, TypeScript, and Tailwind CSS, following SOLID principles.
+
+## Key Features
+
+- **Recipe Search:** Search recipes by name using the free [TheMealDB API](https://www.themealdb.com/api.php).
+
+- **Results Display:** Shows search results in cards with images and names.
+
+- **Recipe Details:** View complete recipe information:
+
+  - Name
+  - Large image.
+  - Embeded video (if available).
+  - Ccategory, origin (area).
+  - List of ingredients and measurements.
+  - Step-by-step instructions.
+
+- **Favorite Management:** Save and remove favorite recipes. Favorites are stored locally in the browser (`localStorage`).
+
+- **Favorites View:** Dedicated page to view all your saved recipes.
+
+- **Responsive Design:** Interface adaptable to different screen sizes (mobile, tablet, desktop).
+
+- **Enhanced User Experience:**
+
+  - Loading skeletons for improved perceived performance.
+  - Debounced search input for optimized API calls while typing.
+  - Global notification system for user feedback.
+
+- **SOLID Principles:** Developed applying SOLID design principles for better maintainability and scalability.
 
 ## Technologies Used
 
-- [Vue 3](https://vuejs.org/)
-- [Vite](https://vitejs.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Vue Router](https://router.vuejs.org/)
-- [Pinia](https://pinia.vuejs.org/)
-- [Axios](https://axios-http.com/)
-- Spoonacular API (for recipe data)
+- **Frontend Framework:** [Vue.js 3](https://vuejs.org/) (Composition API with `<script setup>`)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Routing:** [Vue Router](https://router.vuejs.org/)
+- **State Management:** [Pinia](https://pinia.vuejs.org/)
+- **CSS Framework:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **SASS Compiler:** [sass-embedded](https://www.npmjs.com/package/sass-embedded)
+- **Data API:** [TheMealDB API](https://www.themealdb.com/api.php)
+- **Code Quality:** ESLint, Prettier
+- **SVG Handling:** `vite-svg-loader`
 
-## Project Structure
+## Prerequisites
 
-```
-src/
-├── assets/        # Global styles and assets
-├── components/   # Reusable UI components
-├── views/        # Main views/pages
-├── services/    # Decoupled business logic (API, helpers)
-├── store/         # State management with Pinia
-├── router/       # Routing configuration
-├── App.vue    # Root component
-├── main.js      # Entry point
-```
+Before you begin, ensure you have installed:
 
-#
+- [Node.js](https://nodejs.org/) (Latest LTS version recommended, e.g., v18.x, v20.x)
+- `npm` (comes with Node.js) or `yarn` (optional)
 
-## Features
+## Setup and Installation
 
-- Search recipes by ingredients or keywords
-- View recipe results with name, image, and short description
-- View detailed recipe info: ingredients, steps, time
-- Save favorite recipes to `localStorage`
-- Responsive and accessible UI
+Follow these steps to get the project running on your local environment:
 
-## Installation
+1.  **Clone the repository:**
+
+    ```bash
+    git clone <YOUR_REPOSITORY_URL_HERE> # Replace with your repo URL if you upload it
+    cd recipe-finder-app # Or your project folder name
+    ```
+
+    If you don't have a repository, just make sure you are in the project's root folder that we created.
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+    or if you use `yarn`:
+    ```bash
+    yarn install
+    ```
+
+## Usage
+
+To start the development server:
 
 ```bash
-npm install   // To rhe initial setup adn the required packages
-nē pm run dev   // TO run the project in local env (DEV)
-npm build       // TO deploy the app
+npm run dev
 ```
