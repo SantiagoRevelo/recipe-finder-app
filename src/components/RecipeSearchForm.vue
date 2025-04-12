@@ -1,16 +1,17 @@
 <template>
   <form @submit.prevent="submitSearch" class="mb-6">
-    <div class="flex flex-row sm:flex-grow gap-2">
+    <div class="flex flex-col sm:flex-row gap-2">
       <input
         type="text"
         v-model.trim="searchQuery"
         placeholder="Search for recipes..."
-        class="flex-grow p-2 border border-gray-300 rounder-md focus:outline-none focus:ring-2 focus:ring-green-500"
+        class="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
         aria-label="Search for recipes"
       />
       <button
         type="submit"
-        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled: curdsor-not-allowed"
+        :disabled="!searchQuery"
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Search
       </button>

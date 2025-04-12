@@ -1,18 +1,19 @@
 <template>
   <header class="bg-white text-white shadow-md p-4">
     <div class="container mx-auto flex justify-between items-center">
-      <router-link to="/" class="logo flex items-center py-3">
+      <router-link to="/" class="logo text-2xl flex items-center py-3 font-bold">
         <AppLogo class="inline-block w-8 h-8 mr-2" />
         <span class="text-2xl font-bold">Recipe Finder</span>
       </router-link>
       <nav class="space-x-4">
         <ul class="space-x-4">
-          <router-link to="/" class="text-green-500 hover:text-green-200 py-3">Search</router-link>
-          <router-link to="/Browse" class="text-green-500 hover:text-green-200 p-3"
-            >Browse</router-link
-          ><router-link to="/favorites" class="text-green-500 hover:text-green-200 p-3"
-            >Favorites</router-link
-          >
+          <router-link to="/" class="text-green-500 hover:text-green-200">Search</router-link>
+          <router-link to="/Browse" class="text-green-500 hover:text-green-200">
+            Browse
+          </router-link>
+          <router-link to="/favorites" class="text-green-500 hover:text-green-200">
+            Favorites
+          </router-link>
         </ul>
       </nav>
     </div>

@@ -49,7 +49,7 @@ function mapMealToRecipeDetail(mealData: Meal): RecipeDetail {
     thumbnail: mealData.strMealThumb,
     category: mealData.strCategory || '',
     origin: mealData.strArea || '',
-    instructions: parseStepsFromText(mealData.strInstructions) || '',
+    instructions: mealData.strInstructions || '',
     tags: mealData.strTags?.split(',').map((tag: string) => tag.trim()) || [],
     ytUrl: mealData.strYoutube || '',
     ingredients: mapMealDBResponseToIngredients(mealData),
@@ -104,6 +104,7 @@ export async function getRecipeDetailsById(id: string): Promise<RecipeDetail | n
 }
 
 function parseStepsFromText(text: string | undefined): { step: string; content: string }[] {
+  console.debug(text)
   if (!text) {
     return []
   }
@@ -113,7 +114,7 @@ function parseStepsFromText(text: string | undefined): { step: string; content: 
   let currentContent: string[] = []
 
   for (const line of lines) {
-    const stepMatch = line.match(/^STEP (\d+)/)
+    const stepMatch = line.match(/^STEP (\d+)/) || line.match(/^(\d+)./)
     if (stepMatch) {
       // Add previous step,content if a new step is found
       if (currentStep && currentStep !== stepMatch[0]) {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isLoading" class="text-center py10">
+    <div v-if="isLoading" class="text-center py-10">
       <p class="text-gray-500">Searching for recipes...</p>
     </div>
     <div v-else-if="!recipes" class="text-center py-10">

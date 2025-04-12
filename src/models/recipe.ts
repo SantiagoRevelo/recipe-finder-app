@@ -25,7 +25,7 @@ export interface RecipeSummary {
 export interface RecipeDetail extends RecipeSummary {
   category: string
   origin: string
-  instructions: { step: string; content: string }[]
+  instructions: string
   tags?: string[]
   ytUrl: string
   ingredients: IngredientMeasurement[]
