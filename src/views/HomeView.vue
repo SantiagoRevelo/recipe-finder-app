@@ -23,14 +23,6 @@
       @view-details="onViewDetails"
       @toggle-favorite="onToggleFavorite"
     />
-
-    <div
-      v-if="notification"
-      class="fixed bottom-4 right-4 p-4 bg-green-500 text-white rounded-md shadow-lg transition-opacity duration-300"
-      :class="{ 'opacity-0': !showNotification }"
-    >
-      {{ notification }}
-    </div>
   </main>
 </template>
 
@@ -42,43 +34,21 @@ import RecipeSearchForm from '@/components/RecipeSearchForm.vue'
 import RecipeList from '@/components/RecipeList.vue'
 import type { RecipeSummary } from '@/models/recipe'
 import { useFavoritesStore } from '@/stores/favoritesStore'
+import { useNotificationStore } from '@/stores/notificationStore'
 import { searchRecipesByName } from '@/services/recipesService'
 
-const NOTIFICATION_DURATION = 3000
-const TRANSITION_DURATION = 300
-
 const router = useRouter()
+
 const favoritesStore = useFavoritesStore()
+const notificationStore = useNotificationStore()
 
 const error = ref<string | null>(null)
 const searchTerm = ref('')
 const isLoading = ref(false)
 const recipes = ref<RecipeSummary[]>([])
 
-const notification = ref<string | null>(null)
-const showNotification = ref(false)
-let notificationTimeout: number | null = null
-
 const debounceTimer = ref<number | null>(null)
 const DEBOUNCE_DEALY = 500
-
-const showTempNotification = (message: string) => {
-  notification.value = message
-  showNotification.value = true
-
-  if (notificationTimeout) {
-    clearTimeout(notificationTimeout)
-  }
-
-  notificationTimeout = setTimeout(() => {
-    showNotification.value = false
-
-    // wait for transtion to finish
-    setTimeout(() => {
-      notification.value = null
-    }, TRANSITION_DURATION)
-  }, NOTIFICATION_DURATION)
-}
 
 const onSearch = async (query: string) => {
   console.debug('[HomeView] New search term:', query)
@@ -132,10 +102,10 @@ const onToggleFavorite = (recipe: RecipeSummary) => {
   console.debug('[HomeView] Toggling favorite for recipe:', recipe)
   if (favoritesStore.isFavorite(recipe.id)) {
     favoritesStore.removeFavorite(recipe.id)
-    showTempNotification(`Removed ${recipe.name} from favorites`)
+    notificationStore.showNotification(`Removed ${recipe.name} from favorites`)
   } else {
     favoritesStore.addFavorite(recipe)
-    showTempNotification(`Added ${recipe.name} to favorites`)
+    notificationStore.showNotification(`Added ${recipe.name} to favorites`)
   }
 }
 </script>

@@ -12,14 +12,16 @@
       </RouterView>
     </main>
     <TheFooter />
+    <AppNotification />
   </div>
 </template>
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import TheHeader from './components/layout/TheHeader.vue'
-import TheFooter from './components/layout/TheFooter.vue'
-import RecipeLogo from './assets/images/recipe.svg'
+import TheHeader from '@/components/layout/TheHeader.vue'
+import TheFooter from '@/components/layout/TheFooter.vue'
+import RecipeLogo from '@/assets/images/recipe.svg'
+import AppNotification from '@/components/AppNotification.vue'
 </script>
 
 <style scoped lang="scss">

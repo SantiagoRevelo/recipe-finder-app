@@ -86,41 +86,28 @@
     <div v-if="!error" class="max-w-4xl mx-auto">
       <i class="text-sm mb-3 text-gray-500"><sub>source: https://www.themealdb.com</sub></i>
     </div>
-
-    <div
-      v-if="notification"
-      class="fixed bottom-4 right-4 p-4 bg-green-500 text-white rounded-md shadow-lg transition-opacity duration-300"
-      :class="{ 'opacity-0': !showNotification }"
-    >
-      {{ notification }}
-    </div>
   </div>
 </template>
 <script setup lang="ts">
 import type { RecipeDetail, RecipeSummary } from '@/models/recipe'
 import { getRecipeDetailsById } from '@/services/recipesService'
 import { useFavoritesStore } from '@/stores/favoritesStore'
+import { useNotificationStore } from '@/stores/notificationStore'
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import Heart from '@/assets/images/heart.svg'
 
-const NOTIFICATION_DURATION = 3000
-const TRANSITION_DURATION = 300
-
 const route = useRoute()
 const router = useRouter()
 
 const favoritesStore = useFavoritesStore()
+const notificationStore = useNotificationStore()
 
 const recipe = ref<RecipeDetail | null>(null)
 const isLoading = ref(true)
 
 const error = ref<string | null>(null)
-
-const notification = ref<string | null>(null)
-const showNotification = ref(false)
-let notificationTimeout: number | null = null
 
 // Computed properties
 const recipeId = computed(() => route.params.id as string)
@@ -190,29 +177,11 @@ const onToggleFavorite = () => {
 
   if (isFav.value) {
     favoritesStore.removeFavorite(recipe.value.id)
-    showTempNotification(`Removed "${recipe.value.name}" from favorites`)
+    notificationStore.showNotification(`Removed "${recipe.value.name}" from favorites`)
   } else {
     favoritesStore.addFavorite(recipeSummary)
-    showTempNotification(`Added ${recipe.value.name} to favorites`)
+    notificationStore.showNotification(`Added ${recipe.value.name} to favorites`)
   }
-}
-
-const showTempNotification = (message: string) => {
-  notification.value = message
-  showNotification.value = true
-
-  if (notificationTimeout) {
-    clearTimeout(notificationTimeout)
-  }
-
-  notificationTimeout = setTimeout(() => {
-    showNotification.value = false
-
-    // wait for transtion to finish
-    setTimeout(() => {
-      notification.value = null
-    }, TRANSITION_DURATION)
-  }, NOTIFICATION_DURATION)
 }
 </script>
 
