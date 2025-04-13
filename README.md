@@ -60,8 +60,8 @@ Follow these steps to get the project running on your local environment:
 1.  **Clone the repository:**
 
     ```bash
-    git clone <YOUR_REPOSITORY_URL_HERE> # Replace with your repo URL if you upload it
-    cd recipe-finder-app # Or your project folder name
+    git clone 'https://github.com/SantiagoRevelo/recipe-finder-app'upload it
+    cd recipe-finder-app
     ```
 
     If you don't have a repository, just make sure you are in the project's root folder that we created.
