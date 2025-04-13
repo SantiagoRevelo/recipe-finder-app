@@ -8,9 +8,6 @@
       <nav class="space-x-4">
         <ul class="space-x-4">
           <router-link to="/" class="text-green-500 hover:text-green-200">Search</router-link>
-          <router-link to="/Browse" class="text-green-500 hover:text-green-200">
-            Browse
-          </router-link>
           <router-link to="/favorites" class="text-green-500 hover:text-green-200">
             Favorites
           </router-link>
