@@ -17,11 +17,19 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import TheHeader from '@/components/layout/TheHeader.vue'
 import TheFooter from '@/components/layout/TheFooter.vue'
 import RecipeLogo from '@/assets/images/recipe.svg'
 import AppNotification from '@/components/AppNotification.vue'
+
+import { useCategoryStore } from './stores/categoryStore'
+
+const categoryStore = useCategoryStore()
+onMounted(() => {
+  categoryStore.fetchCategories()
+})
 </script>
 
 <style scoped lang="scss">

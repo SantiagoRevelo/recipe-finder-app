@@ -5,6 +5,7 @@ import type { RecipeSummary } from '@/models/recipe'
 const FAVORITES_STORAGE_KEY = 'recipeFinderApp.Favorites'
 
 export const useFavoritesStore = defineStore('favorites', () => {
+  // --- State ---
   const favoriteRecipes = ref<RecipeSummary[]>(loadFavoritesFromLocalStorage())
 
   const isFavorite = computed(() => {
@@ -14,6 +15,7 @@ export const useFavoritesStore = defineStore('favorites', () => {
 
   const favoritesCount = computed(() => favoriteRecipes.value.length)
 
+  // --- Actions ---
   function addFavorite(recipe: RecipeSummary) {
     if (!isFavorite.value(recipe.id)) {
       favoriteRecipes.value = [...favoriteRecipes.value, recipe]

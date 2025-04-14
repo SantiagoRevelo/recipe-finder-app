@@ -15,14 +15,20 @@ const router = createRouter({
       component: () => import('@/views/RecipeDetailView.vue'),
     },
     {
-      path: '/browse',
-      name: 'browse',
-      component: () => import('@/views/BrowseView.vue'),
-    },
-    {
       path: '/favorites',
       name: 'favorites',
       component: () => import('@/views/FavoritesView.vue'),
+    },
+    {
+      path: '/browse',
+      name: 'browse-categories',
+      component: () => import('@/views/BrowseCategoriesView.vue'),
+    },
+    {
+      path: '/category/:category',
+      name: 'category-recipes',
+      component: () => import('@/views/CategoryRecipesView.vue'),
+      props: true,
     },
     {
       path: '/:pathMatch(.*)',

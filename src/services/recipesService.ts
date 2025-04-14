@@ -4,6 +4,8 @@ import type {
   RecipeSummary,
   RecipeDetail,
   Meal,
+  RecipeCategory,
+  CategoriesDBResponse,
 } from '../models/recipe'
 
 const THE_MEAL_DB = 'TheMealDB'
@@ -34,11 +36,12 @@ function mapMealDBResponseToIngredients(mealData: Meal): IngredientMeasurement[]
   return ingredients
 }
 
-function mapMealToRecipeSummary(mealData: Meal): RecipeSummary {
+function mapMealToRecipeSummary(mealData: Meal, category: string = ''): RecipeSummary {
   return {
     id: mealData.idMeal,
     name: mealData.strMeal,
     thumbnail: mealData.strMealThumb,
+    category: mealData.strCategory || category || '',
   }
 }
 
@@ -57,22 +60,20 @@ function mapMealToRecipeDetail(mealData: Meal): RecipeDetail {
 }
 
 export async function searchRecipesByName(query: string): Promise<RecipeSummary[]> {
-  //console.log(`[RecipeService] Buscando recetas por nombre: ${query}`)
   try {
     const response = await fetch(`${currentProvider.url}search.php?s=${encodeURIComponent(query)}`)
     if (!response.ok) {
-      throw new Error(`Error HTTP: ${response.status}`)
+      throw new Error(`Error HTTP: ${response.status} ${response.statusText}`)
     }
     const data: MealDBResponse<Meal> = await response.json()
 
-    // Si data.meals es null o undefined, retornar array vacío
     if (!data.meals) {
       return []
     }
-    // Mapear cada "meal" a nuestro tipo RecipeSummary
-    return data.meals.map(mapMealToRecipeSummary)
+
+    return data.meals.map((meal) => mapMealToRecipeSummary(meal))
   } catch (error) {
-    console.error('[RecipeService] Error buscando recetas:', error)
+    console.debug('[RecipeService] Error buscando recetas:', error)
     throw new Error(
       `Recipe server is not responding. Either it's down or your internet connection isn't working. Try again later.`,
     )
@@ -80,27 +81,65 @@ export async function searchRecipesByName(query: string): Promise<RecipeSummary[
 }
 
 export async function getRecipeDetailsById(id: string): Promise<RecipeDetail | null> {
-  // console.log(`[RecipeService] Obteniendo detalles para receta ID: ${id}`)
   try {
     const query = `${currentProvider.url}lookup.php?i=${id}`
     console.debug(`[RecipeService] Query: ${query}`)
     const response = await fetch(query)
     if (!response.ok) {
-      throw new Error(`Error HTTP: ${response.status}`)
+      throw new Error(`Error HTTP: ${response.status} ${response.statusText}`)
     }
     const data: MealDBResponse<Meal> = await response.json()
 
-    // lookup.php devuelve un array (aunque solo esperamos 1 resultado por ID)
     if (data.meals && data.meals.length > 0) {
-      // Mapear el primer "meal" a nuestro tipo RecipeDetail
       return mapMealToRecipeDetail(data.meals[0])
     } else {
-      return null // No se encontró la receta con ese ID
+      return null
     }
   } catch (error) {
-    console.error(`[RecipeService] Error obteniendo detalles para ID ${id}:`, error)
+    console.debug(`[RecipeService] Error obteniendo detalles para ID ${id}:`, error)
     throw new Error(
       `Can't get recipe details. Either recipe server it's down or your internet connection isn't working. Try again later.`,
+    )
+  }
+}
+
+export async function getRecipeCategories(): Promise<RecipeCategory[]> {
+  try {
+    const response = await fetch(`${currentProvider.url}categories.php`)
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status} ${response.statusText}`)
+    }
+
+    const data: CategoriesDBResponse = await response.json()
+
+    return data.categories || []
+  } catch (error) {
+    console.debug('[RecipeService] Error obteniendo categorías:', error)
+    throw new Error(
+      `Recipe server is not responding. Either it's down or your internet connection isn't working. Try again later.`,
+    )
+  }
+}
+
+export async function filterRecipesByCategory(categoryName: string): Promise<RecipeSummary[]> {
+  try {
+    const response = await fetch(
+      `${currentProvider.url}filter.php?c=${encodeURIComponent(categoryName)}`,
+    )
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status} ${response.statusText}`)
+    }
+    const data: MealDBResponse<Meal> = await response.json()
+
+    if (!data.meals) {
+      return []
+    }
+
+    return data.meals.map((meal) => mapMealToRecipeSummary(meal, categoryName))
+  } catch (error) {
+    console.debug(`[RecipeService] Error filtering by category ${categoryName}: `, error)
+    throw new Error(
+      `Recipe server is not responding. Either it's down or your internet connection isn't working. Try again later.`,
     )
   }
 }

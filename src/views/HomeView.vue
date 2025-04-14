@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1 class="text-2xl font-semibold mb-4">Recipe Search</h1>
+    <h1 class="text-2xl font-semibold mb-6">Recipe Search</h1>
 
     <RecipeSearchForm @search="onSearch" @UpdateSearchQuery="onUpdateSearchQuery" />
     <hr class="text-gray-200 mb-4" />
@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <h2 v-if="searchTerm && !error" class="text-xl font-medium mb-4">
+    <h2 v-if="searchTerm && !error" class="text-xl font-medium mb-6">
       Search results for "{{ searchTerm }}"
     </h2>
 
@@ -29,68 +29,46 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { storeToRefs } from 'pinia' // <-- Importar storeToRefs
 import RecipeSearchForm from '@/components/RecipeSearchForm.vue'
 import RecipeList from '@/components/RecipeList.vue'
 import type { RecipeSummary } from '@/models/recipe'
 import { useFavoritesStore } from '@/stores/favoritesStore'
 import { useNotificationStore } from '@/stores/notificationStore'
-import { searchRecipesByName } from '@/services/recipesService'
+import { useSearchStore } from '@/stores/searchStore' // <-- Importar el nuevo store
+// import { searchRecipesByName } from '@/services/recipesService'
 
 const router = useRouter()
 
 const favoritesStore = useFavoritesStore()
 const notificationStore = useNotificationStore()
+const searchStore = useSearchStore() // <-- Obtener instancia del store
 
-const error = ref<string | null>(null)
-const searchTerm = ref('')
-const isLoading = ref(false)
-const recipes = ref<RecipeSummary[]>([])
+const { recipes, isLoading, error, searchTerm } = storeToRefs(searchStore)
 
 const debounceTimer = ref<number | null>(null)
-const DEBOUNCE_DEALY = 500
+const DEBOUNCE_DELAY = 500
 
 const onSearch = async (query: string) => {
-  console.debug('[HomeView] New search term:', query)
-  if (!query || query.trim() === '') {
-    recipes.value = []
-    searchTerm.value = ''
-    error.value = null
-
-    return
+  if (debounceTimer.value) {
+    clearTimeout(debounceTimer.value)
+    debounceTimer.value = null
   }
-
-  isLoading.value = true
-  error.value = null
-  recipes.value = []
-  searchTerm.value = query
-
-  try {
-    const results = await searchRecipesByName(query)
-    recipes.value = results
-    if (results.length === 0) {
-      error.value = `No results were found for the term "${query}".\nPlease try another term.`
-    }
-  } catch (err) {
-    console.error('[HomeView] Error searching recipes:', err)
-    if (err instanceof Error) {
-      error.value = err.message
-    } else {
-      error.value = 'An error occurred while searching for recipes'
-    }
-    recipes.value = []
-  } finally {
-    isLoading.value = false
-  }
+  // Llamar a la acción del store
+  searchStore.executeSearch(query)
 }
 
 const onUpdateSearchQuery = (query: string) => {
   if (debounceTimer.value) {
     clearTimeout(debounceTimer.value)
   }
+
+  searchStore.searchTerm = query
+
   debounceTimer.value = window.setTimeout(() => {
-    onSearch(query)
-  }, DEBOUNCE_DEALY)
+    // Llamar a la acción del store después del delay
+    searchStore.executeSearch(query)
+  }, DEBOUNCE_DELAY)
 }
 
 const onViewDetails = (recipeId: string) => {

@@ -1,8 +1,12 @@
-// src/stores/notificationStore.ts
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-// Tipos para las notificaciones
+const NOTIFICATION_TIMEOUT = 3000
+const NOTIFICATION_FADEOUT_DURATION = 300
+
+/**
+ * Type for notifications
+ */
 export type NotificationType = 'success' | 'error' | 'warning' | 'info'
 
 export const useNotificationStore = defineStore('notification', () => {
@@ -16,7 +20,7 @@ export const useNotificationStore = defineStore('notification', () => {
   function showNotification(
     newMessage: string,
     newType: NotificationType = 'info',
-    duration: number = 3000,
+    duration: number = NOTIFICATION_TIMEOUT,
   ) {
     if (timeoutId.value) {
       clearTimeout(timeoutId.value)
@@ -34,13 +38,14 @@ export const useNotificationStore = defineStore('notification', () => {
 
   function hideNotification() {
     isVisible.value = false
-    // Opcional: resetear mensaje y tipo después de la transición de ocultado
-    // setTimeout(() => {
-    //   if (!isVisible.value) { // Comprobar por si se mostró otra mientras tanto
-    //      message.value = null;
-    //      type.value = 'info';
-    //   }
-    // }, 300); // Ajustar a la duración de tu transición CSS
+
+    setTimeout(() => {
+      if (!isVisible.value) {
+        message.value = null
+        type.value = 'info'
+      }
+    }, NOTIFICATION_FADEOUT_DURATION)
+
     if (timeoutId.value) {
       clearTimeout(timeoutId.value)
       timeoutId.value = null
