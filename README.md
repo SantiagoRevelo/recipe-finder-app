@@ -60,7 +60,7 @@ Follow these steps to get the project running on your local environment:
 1.  **Clone the repository:**
 
     ```bash
-    git clone 'https://github.com/SantiagoRevelo/recipe-finder-app'upload it
+    git clone 'https://github.com/SantiagoRevelo/recipe-finder-app'
     cd recipe-finder-app
     ```
 

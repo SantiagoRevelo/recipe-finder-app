@@ -17,6 +17,24 @@ export interface RecipeSummary {
   id: string
   name: string
   thumbnail: string
+  category: string
+}
+
+/**
+ * Type for the categories API response
+ */
+export interface CategoriesDBResponse {
+  categories: RecipeCategory[]
+}
+
+/**
+ * Type for the categories
+ */
+export interface RecipeCategory {
+  idCategory: string
+  strCategory: string
+  strCategoryThumb: string
+  strCategoryDescription: string
 }
 
 /**
@@ -32,7 +50,7 @@ export interface RecipeDetail extends RecipeSummary {
 }
 
 /**
- * Type for
+ * Type for the Meal object
  */
 export interface Meal {
   idMeal: string
