@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isLoading" class="text-center py-10">
-      <p class="text-gray-500">Searching for recipes...</p>
+      <p class="text-gray-500 mb-6">Searching for recipes...</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <RecipeCardSkeleton />
         <RecipeCardSkeleton />

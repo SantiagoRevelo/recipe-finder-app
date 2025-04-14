@@ -2,7 +2,7 @@
   <div
     class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 group"
   >
-    <div @click="emitViewDetails" class="cursor-pointer">
+    <div @click="emitViewDetails" class="cursor-pointer relative">
       <img
         :src="recipe.thumbnail"
         :alt="`Image of ${recipe.name}`"
@@ -13,23 +13,21 @@
         <h3 class="font-semibold text-lg truncate" :title="recipe.name">
           {{ recipe.name }}
         </h3>
+
+        <router-link
+          v-if="shouldShowCategoryLink"
+          :to="{ name: 'category-recipes', params: { category: recipe.category } }"
+          @click.stop
+          class="text-green-500 italic text-xs cursor-pointer hover:text-green-300"
+          :title="`Go to category ${recipe.category}`"
+        >
+          {{ recipe.category }}
+        </router-link>
       </div>
-    </div>
-    <div class="p-4 border-t border-gray-100 flex justify-between items-center">
-      <router-link
-        v-if="shouldShowCategoryLink"
-        :to="{ name: 'category-recipes', params: { category: recipe.category } }"
-        @click.stop
-        class="text-green-500 italic text-xs cursor-pointer hover:text-green-300"
-        :title="`Go to category ${recipe.category}`"
-      >
-        {{ recipe.category }}
-      </router-link>
-      <span v-else></span>
       <button
-        @click="toggleFavoriteHandler"
+        @click.stop="toggleFavoriteHandler"
         :title="isFav ? 'Remove from favorites' : 'Add to favorites'"
-        class="p-2 rounded-full hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-300"
+        class="right-3 top-3 absolute p-2 rounded-full bg-white aspect-square hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-300"
         :aria-pressed="isFav"
       >
         <Heart

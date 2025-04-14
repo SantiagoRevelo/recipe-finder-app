@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1 class="text-2xl font-semibold mb-4">Recipe Search</h1>
+    <h1 class="text-2xl font-semibold mb-6">Recipe Search</h1>
 
     <RecipeSearchForm @search="onSearch" @UpdateSearchQuery="onUpdateSearchQuery" />
     <hr class="text-gray-200 mb-4" />
