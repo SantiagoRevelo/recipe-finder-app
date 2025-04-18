@@ -1,17 +1,17 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-gray-50">
-    <TheHeader />
+  <div class="h-screen flex flex-col bg-gray-50">
+    <TheHeader class="sticky top-0 flex-shrink-0 w-full mx-auto px-4 md:px-10 z-40" />
     <div class="water-mark-wrapper">
       <RecipeLogo class="water-mark text-gray-100" />
     </div>
-    <main class="flex-grow container mx-auto p-4">
+    <main class="flex-grow flex flex-col overflow-hidden w-full mx-auto">
       <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
-          <component :is="Component" />
+          <component :is="Component" class="pt-4 md:py-10" />
         </Transition>
       </RouterView>
     </main>
-    <TheFooter />
+    <TheFooter class="sticky bottom-0 flex-shrink-0 z-40" />
     <AppNotification />
   </div>
 </template>
@@ -43,14 +43,11 @@ onMounted(() => {
 .fade-leave-to {
   opacity: 0;
 }
-main,
-footer,
-header {
+main {
   z-index: 1;
 }
 .water-mark-wrapper {
   position: absolute;
-
   top: 30%;
   bottom: 20%;
   left: 50%;

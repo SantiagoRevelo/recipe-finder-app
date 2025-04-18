@@ -18,7 +18,7 @@
           v-if="shouldShowCategoryLink"
           :to="{ name: 'category-recipes', params: { category: recipe.category } }"
           @click.stop
-          class="text-green-500 italic text-xs cursor-pointer hover:text-green-300"
+          class="text-green-500 italic text-xs cursor-pointer hover:text-green-400"
           :title="`Go to category ${recipe.category}`"
         >
           {{ recipe.category }}
