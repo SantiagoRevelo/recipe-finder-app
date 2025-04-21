@@ -1,7 +1,7 @@
 <template>
   <main class="flex flex-col h-full">
-    <div v-if="isLoading" class="text-center py-20">
-      <p class="text-xl text-gray-500">Loading recipe details...</p>
+    <div v-if="isLoading">
+      <RecipeDetailSkeleton />
     </div>
 
     <div
@@ -18,7 +18,7 @@
       </router-link>
     </div>
 
-    <div v-else-if="recipe" class="max-w-4xl mx-auto mb-6 flex flex-col h-full">
+    <div v-else-if="recipe && !isLoading" class="max-w-4xl mx-auto mb-6 flex flex-col h-full">
       <div
         class="flex-shrink-0 p-4 md:px-10 flex flex-row justify-between items-start sm:items-center gap-4"
       >
@@ -101,6 +101,7 @@ import { useFavoritesStore } from '@/stores/favoritesStore'
 import { useNotificationStore } from '@/stores/notificationStore'
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import RecipeDetailSkeleton from '@/components/skeletons/RecipeDetailSkeleton.vue'
 
 import Heart from '@/assets/images/heart.svg'
 
