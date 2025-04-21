@@ -44,12 +44,12 @@ const notificationClasses = computed(() => {
     case 'success':
       return 'bg-green-500'
     case 'error':
-      return 'bg-red-500'
+      return 'bg-red-600'
     case 'warning':
-      return 'bg-yellow-500'
+      return 'bg-yellow-600'
     case 'info':
     default:
-      return 'bg-blue-500'
+      return 'bg-blue-600'
   }
 })
 </script>

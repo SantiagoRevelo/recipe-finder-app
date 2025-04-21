@@ -1,48 +1,50 @@
 <template>
-  <main>
-    <h1 class="text-2xl font-semibold mb-6">Recipe Search</h1>
-
-    <RecipeSearchForm @search="onSearch" @UpdateSearchQuery="onUpdateSearchQuery" />
-    <hr class="text-gray-200 mb-4" />
-    <div class="text-center">
-      <div
-        v-if="error"
-        class="inline-flex mb-4 p-4 bg-red-100 text-red-700 border border-red-200 rounded-md"
-      >
-        <p class="whitespace-pre-line">{{ error }}</p>
+  <main class="flex flex-col h-full">
+    <div class="flex-shrink-0 px-4 md:px-10">
+      <h1 class="text-2xl font-semibold mb-6">Recipe Search</h1>
+      <RecipeSearchForm @search="onSearch" @UpdateSearchQuery="onUpdateSearchQuery" />
+      <hr class="text-gray-200 mb-4" />
+      <div class="text-center">
+        <div
+          v-if="error"
+          class="inline-flex mb-4 p-4 bg-red-100 text-red-700 border border-red-200 rounded-md"
+        >
+          <p class="whitespace-pre-line">{{ error }}</p>
+        </div>
       </div>
+
+      <h2 v-if="searchTerm && !error" class="text-xl font-medium mb-6">
+        Search results for "{{ searchTerm }}"
+      </h2>
     </div>
 
-    <h2 v-if="searchTerm && !error" class="text-xl font-medium mb-6">
-      Search results for "{{ searchTerm }}"
-    </h2>
-
-    <RecipeList
-      :recipes="recipes"
-      :is-loading="isLoading"
-      @view-details="onViewDetails"
-      @toggle-favorite="onToggleFavorite"
-    />
+    <div class="flex-grow overflow-y-auto px-4 md:px-10 pb-4">
+      <RecipeList
+        :recipes="recipes"
+        :is-loading="isLoading"
+        @view-details="onViewDetails"
+        @toggle-favorite="onToggleFavorite"
+      />
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia' // <-- Importar storeToRefs
+import { storeToRefs } from 'pinia'
 import RecipeSearchForm from '@/components/RecipeSearchForm.vue'
 import RecipeList from '@/components/RecipeList.vue'
 import type { RecipeSummary } from '@/models/recipe'
 import { useFavoritesStore } from '@/stores/favoritesStore'
 import { useNotificationStore } from '@/stores/notificationStore'
-import { useSearchStore } from '@/stores/searchStore' // <-- Importar el nuevo store
-// import { searchRecipesByName } from '@/services/recipesService'
+import { useSearchStore } from '@/stores/searchStore'
 
 const router = useRouter()
 
 const favoritesStore = useFavoritesStore()
 const notificationStore = useNotificationStore()
-const searchStore = useSearchStore() // <-- Obtener instancia del store
+const searchStore = useSearchStore()
 
 const { recipes, isLoading, error, searchTerm } = storeToRefs(searchStore)
 

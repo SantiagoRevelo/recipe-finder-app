@@ -1,20 +1,24 @@
 <template>
-  <div>
-    <h1 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-800">
-      Recipes of the category: <span class="text-green-700">{{ category }}</span>
-    </h1>
+  <main class="flex flex-col h-full">
+    <div class="flex-shrink-0 px-4 md:px-10">
+      <h1 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-800">
+        Recipes of the category: <span class="text-green-500">{{ category }}</span>
+      </h1>
 
-    <div v-if="error" class="mb-4 p-4 bg-red-100 text-red-700 border border-red-200 rounded-md">
-      <p><strong>Error:</strong> {{ error }}</p>
+      <div v-if="error" class="mb-4 p-4 bg-red-100 text-red-700 border border-red-200 rounded-md">
+        <p><strong>Error:</strong> {{ error }}</p>
+      </div>
     </div>
 
-    <RecipeList
-      :recipes="recipes"
-      :is-loading="isLoading"
-      @view-details="handleViewDetails"
-      @toggle-favorite="handleToggleFavorite"
-    />
-  </div>
+    <div class="flex-grow overflow-y-auto px-4 md:px-10 pb-4">
+      <RecipeList
+        :recipes="recipes"
+        :is-loading="isLoading"
+        @view-details="handleViewDetails"
+        @toggle-favorite="handleToggleFavorite"
+      />
+    </div>
+  </main>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'

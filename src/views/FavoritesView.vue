@@ -1,27 +1,29 @@
 <template>
-  <div>
-    <h1 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-800">My favorite recipes</h1>
-
-    <div
-      v-if="favoritesCount === 0"
-      class="text-center py-10 px-4 bg-yellow-50 border border-yellow-200 rounded-md"
-    >
-      <p class="text-lg text-gray-600 mb-4">There is no favorite recipes saved yet.</p>
-      <router-link to="/" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-        Search Recipes
-      </router-link>
+  <main class="flex flex-col h-full">
+    <div class="flex-shrink-0 px-4 md:px-10">
+      <h1 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-800">My favorite recipes</h1>
+      <div
+        v-if="favoritesCount === 0"
+        class="text-center py-10 px-4 bg-yellow-50 border border-yellow-200 rounded-md"
+      >
+        <p class="text-lg text-gray-600 mb-4">There is no favorite recipes saved yet.</p>
+        <router-link to="/" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-400">
+          Search Recipes
+        </router-link>
+      </div>
     </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <RecipeCard
-        v-for="favRecipe in favoriteRecipes"
-        :key="favRecipe.id"
-        :recipe="favRecipe"
-        @viewDetails="onViewDetails"
-        @toggle-favorite="onToggleFavorite"
-      />
+    <div class="flex-grow overflow-y-auto px-4 md:px-10 pb-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <RecipeCard
+          v-for="favRecipe in favoriteRecipes"
+          :key="favRecipe.id"
+          :recipe="favRecipe"
+          @viewDetails="onViewDetails"
+          @toggle-favorite="onToggleFavorite"
+        />
+      </div>
     </div>
-  </div>
+  </main>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
