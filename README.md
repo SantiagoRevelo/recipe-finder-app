@@ -1,21 +1,22 @@
 # Recipe Finder App
 
-This is a simple web application to search for recipes by name, view their details, and save your favorites locally.
+This is a web application to search for recipes and keep a list with your favorite ones.
 
-Built with Vite, Vue.js 3, TypeScript, and Tailwind CSS, following SOLID principles.
+Built with Vite, Vue 3, Pinia, TypeScript, and Tailwind CSS, following SOLID principles.
 
 ## Key Features
 
-- **Recipe Search:** Search recipes by name using the free [TheMealDB API](https://www.themealdb.com/api.php).
+- **Recipe Search:** Search recipes by name using the free [TheMealDB API](https://www.themealdb.com/api.php). Start typing and the app will start showing results
 
-- **Results Display:** Shows search results in cards with images and names.
+- **Results Display:** Shows search results in cards with images and names. Click on them to see the recipe details
 
 - **Recipe Details:** View complete recipe information:
 
   - Name
-  - Large image.
-  - Embeded video (if available).
-  - Ccategory, origin (area).
+  - Faved state
+  - Recipe Picture
+  - Recipe video (if available).
+  - category, origin (area) and tags.
   - List of ingredients and measurements.
   - Step-by-step instructions.
 
@@ -27,9 +28,9 @@ Built with Vite, Vue.js 3, TypeScript, and Tailwind CSS, following SOLID princip
 
 - **Enhanced User Experience:**
 
-  - Loading skeletons for improved perceived performance.
+  - Loading skeletons for improved perceived performance (recipe cards and recipe details).
   - Debounced search input for optimized API calls while typing.
-  - Global notification system for user feedback.
+  - Global notification system for user feedback. You can see notifications at the bottom-right when fav/unfav recipes.
 
 - **SOLID Principles:** Developed applying SOLID design principles for better maintainability and scalability.
 

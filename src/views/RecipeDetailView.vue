@@ -45,7 +45,17 @@
               class="w-40 md:w-full h-auto object-cover rounded-lg shadow-md mb-2"
             />
             <div class="flex flex-col justify-end">
-              <p v-if="recipe.category"><strong>Category:</strong> {{ recipe.category }}</p>
+              <p v-if="recipe.category">
+                <strong>Category: </strong>
+                <router-link
+                  :to="{ name: 'category-recipes', params: { category: recipe.category } }"
+                  @click.stop
+                  class="text-green-500 cursor-pointer hover:text-green-400"
+                  :title="`Go to category ${recipe.category}`"
+                >
+                  {{ recipe.category }}
+                </router-link>
+              </p>
               <p v-if="recipe.origin"><strong>Origin:</strong> {{ recipe.origin }}</p>
             </div>
           </div>
@@ -62,11 +72,11 @@
 
           <div class="md:col-span-3 text-gray-700">
             <div v-if="recipe.tags && recipe.tags.length">
-              <strong>Tags:</strong>
+              <strong>Tags: </strong>
               <span
                 v-for="tag in recipe.tags"
                 :key="tag"
-                class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                class="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2"
               >
                 {{ tag }}
               </span>
