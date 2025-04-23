@@ -24,7 +24,7 @@
       >
         <h1 class="text-3xl md:text-4xl font-bold text-gray-800 flex-grow">{{ recipe.name }}</h1>
         <button
-          class="p-2 rounded-full hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-300 flex-shrink-0"
+          class="rounded-full hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-300 flex-shrink-0"
           :title="isFav ? 'Remove from favorites' : 'Add to favorites'"
           :aria-pressed="isFav"
           @click="onToggleFavorite"
@@ -86,8 +86,12 @@
 
         <div class="mb-6">
           <h2 class="text-2xl font-semibold mb-3 text-gray-800">Ingredients</h2>
-          <ul class="flex flex-wrap gap-3 list-disc list-inside space-y-1 text-gray-700">
-            <li v-for="(item, index) in recipe.ingredients" :key="index">
+          <ul class="flex flex-wrap gap-1 list-disc list-inside text-gray-700">
+            <li
+              v-for="(item, index) in recipe.ingredients"
+              :key="index"
+              class="text-sm space-y-1 w-55"
+            >
               {{ item.measure }} {{ item.ingredient }}
             </li>
           </ul>
@@ -97,8 +101,8 @@
           <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ recipe.instructions }}</p>
         </div>
 
-        <div v-if="!error" class="max-w-4xl mx-auto">
-          <i class="text-sm mb-3 text-gray-500"><sub>source: https://www.themealdb.com</sub></i>
+        <div v-if="!error" class="mx-auto text-xs mt-20 text-gray-500">
+          <i>Source: https://www.themealdb.com</i>
         </div>
       </div>
     </div>
