@@ -17,7 +17,7 @@ Try it here: https://unrivaled-gelato-3c7bc6.netlify.app/
 - Manage (locally) a persistent personal list of favorite recipes.
 - Serve as a practical demonstration of advanced front-end development skills, applying current best practices and technologies.
 
-## Key features:
+## Key features:
 
 - **Recipe Search:** Search recipes using the free [TheMealDB API](https://www.themealdb.com/api.php).
 
