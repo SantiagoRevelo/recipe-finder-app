@@ -1,28 +1,31 @@
 # Recipe Finder App
 
-This is a web application to search for recipes and keep a list with your favorite ones.
+A modern, responsive, progressive web application (PWA) designed for discovering, viewing, and saving cooking recipes.
 
 Built with Vite, Vue 3, Pinia, TypeScript, and Tailwind CSS, following SOLID principles.
 
-## Key Features
+This is a PWA you can install on your device.
 
-- **Recipe Search:** Search recipes by name using the free [TheMealDB API](https://www.themealdb.com/api.php). Start typing and the app will start showing results
+## Demo:
 
-- **Results Display:** Shows search results in cards with images and names. Click on them to see the recipe details
+Try it here: https://unrivaled-gelato-3c7bc6.netlify.app/
 
-- **Recipe Details:** View complete recipe information:
+## Purpose:
 
-  - Name
-  - Faved state
-  - Recipe Picture
-  - Recipe video (if available).
-  - category, origin (area) and tags.
-  - List of ingredients and measurements.
-  - Step-by-step instructions.
+- Allow users to easily find recipes by name, category.
+- Provide a clean and intuitive interface for viewing details (ingredients, instructions).
+- Manage (locally) a persistent personal list of favorite recipes.
+- Serve as a practical demonstration of advanced front-end development skills, applying current best practices and technologies.
 
-- **Favorite Management:** Save and remove favorite recipes. Favorites are stored locally in the browser (`localStorage`).
+## Key features:
+
+- **Recipe Search:** Search recipes using the free [TheMealDB API](https://www.themealdb.com/api.php).
+
+- **Browse Categories:** See the recipes sorted by categories.
 
 - **Favorites View:** Dedicated page to view all your saved recipes.
+
+- **Favorites Management:** Save and remove favorite recipes. Favorites are stored locally in the browser (`localStorage`).
 
 - **Responsive Design:** Interface adaptable to different screen sizes (mobile, tablet, desktop).
 
@@ -32,9 +35,11 @@ Built with Vite, Vue 3, Pinia, TypeScript, and Tailwind CSS, following SOLID pri
   - Debounced search input for optimized API calls while typing.
   - Global notification system for user feedback. You can see notifications at the bottom-right when fav/unfav recipes.
 
+- **PWA Ready:** The site can be installed as an standalone application from the browser
+
 - **SOLID Principles:** Developed applying SOLID design principles for better maintainability and scalability.
 
-## Technologies Used
+## Technology Stack:
 
 - **Frontend Framework:** [Vue.js 3](https://vuejs.org/) (Composition API with `<script setup>`)
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
@@ -82,4 +87,10 @@ To start the development server:
 
 ```bash
 npm run dev
+```
+
+Then open browser and go to the url provided in the console i.e.:
+
+```bash
+http://localhost:5173/
 ```

@@ -7,7 +7,7 @@
     <main class="flex-grow flex flex-col overflow-hidden w-full mx-auto">
       <RouterView v-slot="{ Component }">
         <Transition name="fade" mode="out-in">
-          <component :is="Component" class="pt-4 md:py-10" />
+          <component :is="Component" />
         </Transition>
       </RouterView>
     </main>
